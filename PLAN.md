@@ -48,12 +48,14 @@
 
 ## 6. Messaging
 - **TODO**
-  - [] Create `Message` model with `sender_id`, `receiver_id`, `body`, `created_at`.
-  - [] Build a chat view (Turbo Frame) that streams new messages via ActionCable.
-  - [] Stimulus controller for sending messages and auto‑scrolling.
+  - [] Create `Chat` model with columns: `user_a_id`, `user_b_id`, `messages` (jsonb).  
+  - [] Store each message as a JSON object: `{ sender_id:, body:, timestamp: }`.  
+  - [] Build a chat view (Turbo Frame) that streams new messages via ActionCable.  
+  - [] Stimulus controller for sending messages and auto‑scrolling.  
 - **Notes**
-  - No match logic: any two users can chat once they tap each other.
-  - Store message history in the database; paginate older messages.
+  - No separate `Message` table; all conversation history lives in the `messages` jsonb column.  
+  - This limits history size but reduces write‑scale overhead.  
+  - Consider truncating or archiving old messages if needed.
 
 ## 7. Push Notifications
 - **TODO**
