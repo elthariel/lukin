@@ -36,7 +36,7 @@ services:
   # PG: The one and true data store
   #
   pg:
-    image: 'postgres:17-alpine'
+    image: 'postgis/postgis:17-3.5-alpine'
     environment:
       POSTGRES_USER: lukin
       POSTGRES_HOST_AUTH_METHOD: trust

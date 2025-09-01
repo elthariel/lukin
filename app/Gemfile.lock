@@ -62,6 +62,9 @@ GEM
       activemodel (= 8.0.2)
       activesupport (= 8.0.2)
       timeout (>= 0.4.0)
+    activerecord-postgis-adapter (11.0.0)
+      activerecord (~> 8.0.0)
+      rgeo-activerecord (~> 8.0.0)
     activestorage (8.0.2)
       actionpack (= 8.0.2)
       activejob (= 8.0.2)
@@ -365,6 +368,10 @@ GEM
       actionpack (>= 5.2)
       railties (>= 5.2)
     rexml (3.4.1)
+    rgeo (3.0.1)
+    rgeo-activerecord (8.0.0)
+      activerecord (>= 7.0)
+      rgeo (>= 3.0)
     rspec-core (3.13.4)
       rspec-support (~> 3.13.0)
     rspec-expectations (3.13.5)
@@ -486,6 +493,7 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin (= 4.0.0.beta15)
+  activerecord-postgis-adapter (~> 11.0)
   annotaterb (~> 4)
   aws-sdk-s3 (~> 1)
   bootsnap
