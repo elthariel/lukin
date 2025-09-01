@@ -24,7 +24,6 @@ Rails.application.routes.draw do
   #   end
   # end
 
-
   # Render dynamic PWA files from app/views/pwa/*
   # (Manifest linked from application.html.erb)
   get 'manifest' => 'rails/pwa#manifest', as: :pwa_manifest
@@ -33,5 +32,5 @@ Rails.application.routes.draw do
   # get '/:locale' => 'home#index', as: 'root_i18n'
 
   # Defines the root path route ("/")
-  root "home#index"
+  root 'home#index'
 end

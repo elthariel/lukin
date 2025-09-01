@@ -35,6 +35,11 @@
 #
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+RSpec.describe User  do
+  subject { Fabricate :user }
+
+  describe 'fabrication' do
+    it { is_expected.to be_a described_class }
+    it { is_expected.to be_valid }
+  end
 end

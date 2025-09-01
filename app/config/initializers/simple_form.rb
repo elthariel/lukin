@@ -15,10 +15,10 @@ SimpleForm.setup do |config|
   # stack. The options given below are used to wrap the
   # whole input.
   config.wrappers :default,
-    tag: :label,
-    class: ['form-control'],
-    hint_class: :field_with_hint,
-    error_class: :field_with_errors, valid_class: :field_without_errors do |b|
+                  tag: :label,
+                  class: ['form-control'],
+                  hint_class: :field_with_hint,
+                  error_class: :field_with_errors, valid_class: :field_without_errors do |b|
     ## Extensions enabled by default
     # Any of these extensions can be disabled for a
     # given input by passing: `f.input EXTENSION_NAME => false`.
@@ -58,7 +58,7 @@ SimpleForm.setup do |config|
     ## Inputs
     b.use :label, class: 'label-text', wrap_with: { tag: :div, class: :label }
     b.use :input, error_class: 'text-error', valid_class: 'text-success',
-      class: 'text-white bg-slate-900 px-4 py-3 w-full'
+                  class: 'text-white bg-slate-900 px-4 py-3 w-full'
     b.use :hint,  wrap_with: { tag: :label, class: 'label-text-alt' }
     b.use :error, wrap_with: { tag: :label, class: %w[label-text-alt text-error] }
 
@@ -70,8 +70,8 @@ SimpleForm.setup do |config|
   end
 
   config.wrappers :icon_input,
-    tag: :label,
-    class: ['form-control'] do |b|
+                  tag: :label,
+                  class: ['form-control'] do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength
@@ -83,19 +83,19 @@ SimpleForm.setup do |config|
     ## Inputs
     b.use :label, class: 'label-text', wrap_with: { tag: :div, class: :label }
     b.wrapper :icon_wrapper, tag: :label,
-      class: 'input input-bordered flex items-center gap-3 rounded-lg
+                             class: 'input input-bordered flex items-center gap-3 rounded-lg
         bg-slate-800 border-slate-700 px-4 py-3 gap-3
         focus-within:border-blue-500 focus-within:ring-1
         focus-within:ring-blue-500' do |comp|
       comp.use :lucide_icon
       comp.use :input, class: 'w-full text-white bg-slate-900 px-4 py-3',
-        error_class: 'text-error',
-        valid_class: 'text-success'
+                       error_class: 'text-error',
+                       valid_class: 'text-success'
     end
     b.wrapper tag: :div, class: 'label', unless_blank: true do |comp|
       comp.use :hint,  wrap_with: { tag: :label, class: 'label-text-alt' }
       comp.use :full_error,
-        wrap_with: { tag: :label, class: %w[label-text-alt text-error] }
+               wrap_with: { tag: :label, class: %w[label-text-alt text-error] }
     end
   end
 

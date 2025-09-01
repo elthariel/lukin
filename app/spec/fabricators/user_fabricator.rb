@@ -33,5 +33,17 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #  index_users_on_unlock_token          (unlock_token) UNIQUE
 #
-Fabricator(:user) do
+
+default_password = 'qweasdzxc'
+
+Fabricator(:user_base, class_name: 'User') do
+  email { FFaker::Internet.free_email }
+  confirmed_at { 1.hour.ago }
+
+  password default_password
+  password_confirmation default_password
+end
+
+Fabricator(:user, from: :user_base) do
+  profile { Fabricate.build :profile_base }
 end

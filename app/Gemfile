@@ -8,6 +8,9 @@ gem 'rails', '~> 8.0.2'
 gem 'propshaft'
 # Use PG
 gem 'pg', '~> 1.5'
+# PostGIS support
+gem 'activerecord-postgis-adapter', '~> 11.0'
+
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '>= 5.0'
 
@@ -17,9 +20,6 @@ gem 'tzinfo-data', platforms: %i[windows jruby]
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
 # gem 'solid_cable'
 # gem 'solid_cache'
-
-# PostGIS support
-gem 'activerecord-postgis-adapter', '~> 11.0'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
@@ -97,7 +97,6 @@ gem 'browser', '~> 6.2' # UA detection for PH filtering
 
 # Markdown support
 gem 'commonmarker', '~> 2.3'
-
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

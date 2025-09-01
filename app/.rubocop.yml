@@ -1,6 +1,7 @@
-inherit_from:
-  - ../.rubocop.yml
-  - .rubocop_todo.yml
+plugins:
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-rspec_rails
 
 #
 # Metrics

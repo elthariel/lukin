@@ -11,6 +11,11 @@ class ApplicationController < ActionController::Base
   # allow_browser versions: :modern unless Rails.env.development?
 
   around_action :switch_locale
+  before_action :authenticate_user!
+
+  def current_user
+    User.first
+  end
 
   def switch_locale(&)
     locale = params[:locale] ||
