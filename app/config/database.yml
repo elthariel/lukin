@@ -1,0 +1,56 @@
+# SQLite. Versions 3.8.0 and up are supported.
+#   gem install sqlite3
+#
+#   Ensure the SQLite 3 gem is defined in your Gemfile
+#   gem "sqlite3"
+#
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see Rails configuration guide
+  # https://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: <%= ENV.fetch('RAILS_MAX_THREADS') { 5 } %>
+
+dkc-default: &dkc-default
+  host: <%= ENV.fetch('POSTGRES_HOST', 'pg') %>
+  user: <%= ENV.fetch('POSTGRES_USER', 'lukin') %>
+  password: <%= ENV.fetch('POSTGRES_PASSWORD', 'ignored') %>
+  port: <%= ENV.fetch('POSTGRES_PORT', '5432') %>
+
+development:
+  <<: [*default, *dkc-default]
+  database: lukin_dev
+
+test:
+  <<: [*default, *dkc-default]
+  database: lukin_test
+
+production: &prod
+  <<: *default
+  url: <%= ENV["DATABASE_URL"] %>
+
+staging:
+  <<: *prod
+
+# # SQLite3 write its data on the local filesystem, as such it requires
+# # persistent disks. If you are deploying to a managed service, you should
+# # make sure it provides disk persistence, as many don't.
+# #
+# # Similarly, if you deploy your application as a Docker container, you must
+# # ensure the database is located in a persisted volume.
+# production:
+#   primary:
+#     <<: *default
+#     # database: path/to/persistent/storage/production.sqlite3
+#   cache:
+#     <<: *default
+#     # database: path/to/persistent/storage/production_cache.sqlite3
+#     migrations_paths: db/cache_migrate
+#   queue:
+#     <<: *default
+#     # database: path/to/persistent/storage/production_queue.sqlite3
+#     migrations_paths: db/queue_migrate
+#   cable:
+#     <<: *default
+#     # database: path/to/persistent/storage/production_cable.sqlite3
+#     migrations_paths: db/cable_migrate

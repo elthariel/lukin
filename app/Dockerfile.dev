@@ -1,0 +1,54 @@
+# syntax = docker/dockerfile:1
+
+# Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
+ARG RUBY_VERSION=3.3.6
+FROM registry.docker.com/library/ruby:$RUBY_VERSION
+
+# Make sure to specify the UID of the user you'll be developing with in the
+# host system
+ARG LUKIN_UID=1000
+ARG MAKE_JOBS=8
+
+# Rails app lives here
+WORKDIR /lukin/app
+
+# Base env vars
+ENV LC_ALL=C.UTF-8 \
+    LANGUAGE=en_US.UTF-8 \
+    LANG=en_us.UTF-8 \
+    MAKE="make -j ${MAKE_JOBS}" \
+    DEBIAN_FRONTEND=noninteractive
+
+# Rails env vars
+ENV RAILS_ENV="development" \
+    BUNDLE_PATH="/usr/local/bundle"
+
+# Install packages needed to build gems
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y \
+    build-essential git libpq-dev libvips pkg-config ca-certificates locales \
+    gnupg curl \
+    nodejs yarnpkg \
+    && echo "en_US.UTF-8 UTF-8" >/etc/locale.gen \
+    && locale-gen \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN ln -s /usr/bin/yarnpkg /usr/bin/yarn
+
+# Run and own only the runtime files as a non-root user for security
+RUN useradd app --create-home --shell /bin/bash --uid ${LUKIN_UID} -o
+
+USER app
+
+# Install application gems
+COPY --chown=app Gemfile Gemfile.lock .ruby-version ./
+RUN bundle install --jobs=$(nproc) && \
+    bundle exec bootsnap precompile --gemfile
+
+# Copy application code
+COPY --chown=app . .
+
+# Start the server by default, this can be overwritten at runtime
+EXPOSE 3000
+CMD ["./bin/rails", "server"]

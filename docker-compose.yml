@@ -1,0 +1,116 @@
+#
+# This docker compose file contains the third-party services that we depend on,
+# like databases and such
+#
+
+x-svc-default:
+  env-files: &svc-env-files
+    - path: ./.env.services.dev
+      required: true
+    - path: ./.env.services.local
+      required: false
+
+x-app-snippets:
+  apps-env-file: &apps-env-file
+    - path: ./.env.apps.local
+      required: false
+
+  app-rails-env: &app-rails-env
+    DOMAIN: ${DOMAIN}
+
+  app-rails-svc: &app-rails-svc
+    build:
+      context: app
+      dockerfile: Dockerfile.dev
+      args:
+        LUKIN_UID: ${LUKIN_UID}
+        RUBY_VERSION: 3.3.6
+    env_file: *apps-env-file
+    volumes:
+      - .:/lukin
+      # This saves shell/rails console history
+      - app-home:/home/app
+
+services:
+  #
+  # PG: The one and true data store
+  #
+  pg:
+    image: 'postgres:17-alpine'
+    environment:
+      POSTGRES_USER: lukin
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+
+  # Unused ATM
+  # #
+  # # Open source redis fork
+  # #
+  # valkey:
+  #   image: 'valkey/valkey:7.2-alpine'
+  #   env_file: *svc-env-files
+
+  #
+  # Traefik Ingress
+  #
+  lb:
+    image: traefik:latest
+    ports:
+      - '80:80'
+      - '3035:3035'
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.port=8080'
+      - 'traefik.http.services.lb.loadbalancer.server.port=8080'
+      - 'traefik.http.routers.lb.entrypoints=web'
+      - 'traefik.http.routers.lb.rule=Host(`lb.${DOMAIN}`)'
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - traefik-data:/data
+
+  #
+  # App stuff
+  #
+
+ #
+  # Chat (aka the FlagChat)
+  #
+  app:
+    <<: *app-rails-svc
+    environment:
+      <<: *app-rails-env
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.app.entrypoints=web'
+      - 'traefik.http.routers.app.rule=Host(`app.${DOMAIN}`)'
+      - 'traefik.http.routers.app.service=app'
+      - 'traefik.http.services.app.loadbalancer.server.port=3000'
+    stop_grace_period: 2s
+    command: bin/dev
+
+  app-vite:
+    <<: *app-rails-svc
+    environment:
+      <<: *app-rails-env
+      VITE_RUBY_HOST: app-vite
+      VITE_RUBY_PORT: 3036
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.app-vite.entrypoints=web'
+      - 'traefik.http.routers.app-vite.rule=Host(`app.${DOMAIN}`)&&PathPrefix(`/vite-dev/`)'
+      - 'traefik.http.routers.app-vite.service=app-vite'
+      - 'traefik.http.services.app-vite.loadbalancer.server.port=3036'
+    stop_grace_period: 1s
+    tty: true
+    command: sh -c "bin/front"
+
+
+volumes:
+  pg-data:
+  traefik-data:
+  app-home:

@@ -1,0 +1,106 @@
+inherit_from:
+  - ../.rubocop.yml
+  - .rubocop_todo.yml
+
+#
+# Metrics
+#
+Metrics/AbcSize:
+  Exclude:
+    - db/migrate/*
+
+Metrics/MethodLength:
+  Exclude:
+    - db/migrate/*
+
+Metrics/BlockLength:
+  Exclude:
+    - ./Gemfile.lock
+    - ./config/environments/*
+    - ./config/initializers/*
+    - config/routes.rb
+    - lib/tasks/*
+    - spec/**/*.rb
+    - app/admin/**/*.rb
+    - app/models/game/state_machine.rb
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+    # Upstream migration(s)
+    - 'db/migrate/*taggable*'
+
+
+#
+# Naming
+#
+
+
+#
+# Layout
+#
+
+Layout/LineLength:
+  AllowedPatterns:
+    # Annotate index/constraint lines
+    - "#  index_"
+  Exclude:
+    # Upstream migrations
+    - 'db/migrate/*taggable*'
+    - 'db/migrate/*devise*'
+    - db/migrate/20250624201814_create_good_jobs.rb
+    - config/initializers/devise.rb
+
+
+#
+# Security
+#
+
+#
+# Rails
+#
+Rails/LexicallyScopedActionFilter:
+  Exclude:
+    - app/controllers/users/*
+
+Rails/Output:
+  Exclude:
+    - db/seeds.rb
+    - lib/tasks/*.rake
+
+Rails/ThreeStateBooleanColumn:
+  Exclude:
+    - db/migrate/20250624201814_create_good_jobs.rb
+
+Rails/UnknownEnv:
+  Environments:
+    - test
+    - development
+    - staging
+    - production
+
+Rails/BulkChangeTable:
+  Exclude:
+    - 'db/migrate/*_add_context_to_quests.rb'
+    - 'db/migrate/*_remove_game_state_and_add_game_type.rb'
+    - 'db/migrate/*_add_type_to_user.rb'
+    - 'db/migrate/*_rename_onboarding_slides_to_slides.rb'
+
+#
+# Rspec
+#
+
+RSpec/MissingExampleGroupArgument:
+  Exclude:
+    - spec/fabricators/*
+
+RSpec/EmptyExampleGroup:
+  Exclude:
+    - spec/fabricators/*
+
+RSpec/ExampleLength:
+  Exclude:
+    - spec/features/*
+
+RSpec/MultipleExpectations:
+  Exclude:
+    - spec/features/*

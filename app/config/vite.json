@@ -1,0 +1,19 @@
+{
+  "all": {
+    "sourceCodeDir": "app/javascript",
+    "watchAdditionalPaths": []
+  },
+  "development": {
+    "host": "app.lvh.me",
+    "assetHost": "app.lvh.me",
+    "autoBuild": true,
+    "publicOutputDir": "vite-dev",
+    "port": 80,
+    "skipProxy": true
+  },
+  "test": {
+    "autoBuild": true,
+    "publicOutputDir": "vite-test",
+    "port": 3037
+  }
+}

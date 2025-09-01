@@ -1,1 +1,6 @@
+# Global gitignore
+
+.env.*
+!.env.*.dev
+
 .aider*

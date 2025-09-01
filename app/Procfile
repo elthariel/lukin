@@ -1,0 +1,3 @@
+web: ./bin/heroku-boot-hook.sh && bundle exec rails server -p $PORT
+good_job: ./bin/heroku-boot-hook.sh && bundle exec good_job start
+release: ./bin/heroku-release-hook.sh

@@ -1,0 +1,29 @@
+#! /bin/bash
+
+scripts_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+root_dir="${scripts_dir}/.."
+
+if which docker-compose > /dev/null; then
+    DKC=docker-compose
+else
+    DKC="docker compose"
+fi
+
+if ! $DKC version > /dev/null ; then
+    echo "Cannot find docker compose, please install it"
+    exit 1
+fi
+
+dkc_extra_args=""
+if [ -f "$root_dir/.env.services.local" ]; then
+    dkc_extra_args="$dkc_extra_args --env-file $root_dir/.env.services.local"
+fi
+
+if [ -f "$root_dir/.env.apps.local" ]; then
+    dkc_extra_args="$dkc_extra_args --env-file $root_dir/.env.apps.local"
+fi
+
+$DKC -f "$root_dir/docker-compose.yml" \
+     --env-file "$root_dir/.env.services.dev" \
+     $dkc_extra_args \
+     "$@"

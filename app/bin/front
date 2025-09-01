@@ -1,0 +1,13 @@
+#! /usr/bin/bash
+
+set -x
+set -e
+
+echo 'Building ActiveAdmin css'
+./bin/bundle exec tailwindcss -- \
+       -i app/assets/stylesheets/active_admin.css \
+       -o app/assets/builds/active_admin.css \
+       -c tailwind-active_admin.config.js
+
+echo '[Watch] Starting vite'
+./bin/vite dev

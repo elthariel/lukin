@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html class="h-full" lang="<%= I18n.locale %>">
+  <head>
+    <title><%= content_for(:title) || "U Lukin ?" %></title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover">
+    <%# Disable turbo prefetching for now, to reduce the number of events sent to PH %>
+    <meta name="turbo-prefetch" content="true">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+    <%= favicon_link_tag '/favicon.ico' %>
+
+    <%= vite_client_tag %>
+    <%= vite_javascript_tag 'application' %>
+    <%= vite_stylesheet_tag 'application.tailwind.css' %>
+  </head>
+
+  <body class="min-h-screen-safe h-auto flex flex-col bg-slate-900 pt-[4rem] mt-safe">
+
+    <main class="container lukin flex flex-col self-center">
+      <%= yield %>
+    </main>
+</html>
