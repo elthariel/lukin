@@ -6,12 +6,13 @@ admin_constraint = lambda do |request|
 end
 
 Rails.application.routes.draw do
-  get "home/index"
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   constraints admin_constraint do
     mount GoodJob::Engine => '/jobs'
   end
+
+  devise_for :users
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions,
   # otherwise 500. Can be used by load balancers and uptime monitors to verify
@@ -23,8 +24,6 @@ Rails.application.routes.draw do
   #   end
   # end
 
-  scope '/:locale' do
-  end
 
   # Render dynamic PWA files from app/views/pwa/*
   # (Manifest linked from application.html.erb)
