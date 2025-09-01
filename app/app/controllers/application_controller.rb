@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   # include BaseControllerConcern
   # include PosthogConcern
   # include PunditConcern
+  include LocationConcern
 
   # NOTE: This prevents pwabuilder.com and any other browser to work properly
   # # Only allow modern browsers supporting webp images, web push, badges,

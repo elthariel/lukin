@@ -23,21 +23,32 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Profile < ApplicationRecord
+  ACTIVE = 30.minutes
+  CONNECTED = 3.days
+
   belongs_to :user, optional: false
 
   jsonb_accessor :data,
     title: [:string, default: ''],
     bio: [:string, default: '']
 
+  has_one_attached :picture
+
   scope :with_distance, lambda { |point|
     select('*', arel_table[:location].st_distance(Arel.spatial(point)).as('distance'))
   }
   scope :by_distance, ->(point) { with_distance(point).order(distance: :asc) }
+  scope :connected, -> { where('updated_at > ?', CONNECTED.ago ) }
 
   validates :age, numericality: { greater_than_or_equal_to: 18 }
 
   def self.location_factory
     # Longitude, Latitude
     @location_factory ||= RGeo::Geographic.spherical_factory(srid: 4326)
+  end
+
+  # We assume the user is online/active if they updated their profile/location recently
+  def active?
+    updated_at > ACTIVE.ago
   end
 end

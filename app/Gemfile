@@ -60,6 +60,7 @@ gem 'vite_rails', '~> 3.0'
 # Active Record stuff
 #
 gem 'jsonb_accessor'
+gem 'activestorage-validator'
 # gem 'acts-as-taggable-on', '~> 12'
 # gem 'friendly_id', '~> 5.5'
 # gem 'state_machines-activerecord', '~> 0.9.0'

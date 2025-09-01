@@ -25,14 +25,16 @@ if Rails.env.development?
     )
   end
 
-  # unless User.exists?(email: default_email)
-  #   puts 'Creating an User'
-  #   User::Member.create!(
-  #     email: default_email,
-  #     password: password,
-  #     password_confirmation: password,
-  #     name: 'Monkee'
-  #   )
-  # end
+  unless User.exists?(email: admin_email)
+    puts 'Creating a regular User'
+    Fabricate :user,
+      email: admin_email,
+      password: password
+  end
 
+  if Profile.count < 100
+    puts "Creating 100 profiles. It's going to take a moment..."
+    Fabricate.times 100, :profile
+    puts "Done !"
+  end
 end

@@ -25,6 +25,8 @@
 
 FRANCE_BBOX = [[4.504395, 42.779275], [8.481445, 51.522416]].freeze
 
+PICS = Rails.root.glob('spec/fixtures/sexy/*.jpg')
+
 Fabricator(:profile_base, class_name: 'Profile') do
   location do
     Profile.location_factory.point(

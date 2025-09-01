@@ -1,0 +1,88 @@
+<div class="bg-base-100 text-white min-h-screen-safe w-screen flex flex-col mb-4">
+  <!-- Full screen carousel with basic infocs -->
+  <div class="relative h-screen-safe w-screen flex flex-col">
+    <!-- Profile picture -->
+    <img
+      src="https://files.mastodon.social/media_attachments/files/010/381/365/original/0e3cb5e92840be55.jpeg"
+      alt="Profile picture"
+      class="w-full h-full object-cover grow">
+
+    <!-- Profile title, age & distance, CTA -->
+    <div class="grow-0 w-full flex flex-col bg-base-100/50 px-4 pt-6 pb-2">
+      <div class="flex items-top justify-between">
+        <h1 class="text-2xl font-bold text-white">
+          <span><%= @profile.title.presence %></span>
+          <span class="ml-2 text-slate-300 font-sm"><%= @profile.age %></span>
+        </h1>
+
+        <div class="text-neutral-content">
+          <%= format_distance(@distance) %>
+        </div>
+      </div>
+
+      <!-- Online or not -->
+      <div>
+        <% if @profile.active? %>
+          <span class="text-success"> Online now </span>
+        <% else %>
+          <span class="text-neutral-content">
+            Online <%= time_ago_in_words @profile.updated_at %> ago
+          </span>
+        <% end %>
+      </div>
+
+      <!-- Chat CTA -->
+      <div class="mt-6 w-full flex items-center gap-2">
+        <a href="#" class="grow text-slate-300 rounded-full p-3 px-4 bg-gray-800 text-neutral-content">
+          Say something nice...
+        </a>
+        <a href="#" class="text-slate-300 rounded-full p-2 bg-gray-800">
+          <%= lucide_icon :flame, class: 'w-9 h-9'  %>
+        </a>
+        <a href="#"
+          class="text-slate-300 rounded-full p-2 bg-slate-800">
+          <%= lucide_icon 'message-circle', class: 'w-9 h-9'  %>
+        </a>
+      </div>
+    </div>
+
+    <!-- Top navigation bar with buttons -->
+    <div class="absolute top-4 left-0 right-0 px-4 flex justify-between items-center">
+      <a href="<%= profiles_path %>"
+        class="btn btn-circle bg-base-100/85 hover:bg-base-100 border-0">
+        <%= lucide_icon('arrow-left', class: 'w-6 h-6') %>
+      </a>
+
+      <div class="flex gap-2">
+        <button class="btn btn-circle bg-base-100/85 hover:bg-base-100 border-0">
+          <%= lucide_icon('star', class: 'w-6 h-6') %>
+        </button>
+        <button class="btn btn-circle bg-base-100/85 hover:bg-base-100 border-0">
+          <%= lucide_icon('more-horizontal', class: 'w-6 h-6') %>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile section -->
+  <div class="p-4">
+    <h2 class="text-xl font-bold text-secondary mb-2">Bio</h2>
+    <div class="text-neutral-content flex flex-wrap">
+      <%= @profile.bio %>
+    </div>
+  </div>
+
+  <!-- Interests section -->
+  <div class="px-4">
+    <h2 class="text-xl font-bold text-secondary mb-2">Interests</h2>
+    <div class="text-neutral-content flex flex-wrap">
+      <div class="mr-4">Music</div>
+      <div class="mr-4">Travel</div>
+      <div class="mr-4">Photography</div>
+      <div class="mr-4">Cooking</div>
+      <div class="mr-4">Hiking</div>
+    </div>
+  </div>
+
+
+</div>
