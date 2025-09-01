@@ -4,7 +4,7 @@
 #
 # Table name: admin_users
 #
-#  id                     :bigint           not null, primary key
+#  id                     :uuid             not null, primary key
 #  current_sign_in_at     :datetime
 #  current_sign_in_ip     :string
 #  email                  :string           default(""), not null

@@ -44,6 +44,7 @@ module Flagchat
     config.generators.system_tests = nil
 
     config.generators do |g|
+      g.orm :active_record, primary_key_type: :uuid
       g.scaffold_controller 'scaffold_controller'
     end
   end
