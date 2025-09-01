@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: profiles
@@ -21,7 +23,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 
-FRANCE_BBOX = [[4.504395, 42.779275], [8.481445, 51.522416]]
+FRANCE_BBOX = [[4.504395, 42.779275], [8.481445, 51.522416]].freeze
 
 Fabricator(:profile_base, class_name: 'Profile') do
   location do

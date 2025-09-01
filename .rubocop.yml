@@ -1,0 +1,120 @@
+#
+# Shared rubocop configuration accross projects Fogi/Chat/...
+#
+
+plugins:
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-rspec_rails
+
+AllCops:
+  NewCops: enable
+
+#
+# Style
+#
+Style/Documentation:
+  Enabled: false
+Style/ClassAndModuleChildren:
+  Enabled: false
+Style/GuardClause:
+  Enabled: false
+
+Style/ConditionalAssignment:
+  EnforcedStyle: assign_inside_condition
+
+Style/HashAsLastArrayItem:
+  EnforcedStyle: no_braces
+
+
+#
+# Metrics
+#
+Metrics/ParameterLists:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 25
+  CountAsOne: ['array', 'heredoc', 'method_call']
+
+Metrics/AbcSize:
+  Max: 20
+
+
+
+#
+# Naming
+#
+Naming/MethodParameterName:
+  AllowedNames: [as, at, by, cc, db, ex, id, if, io, ip, of, to, kw]
+
+Naming/PredicatePrefix:
+  AllowedMethods:
+    - is_a?
+    - has_one
+    - has_many
+
+
+#
+# Layout
+#
+Layout/LineLength:
+  Max: 89
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+
+
+#
+# Rspec
+#
+RSpec/NamedSubject:
+  Enabled: false
+
+RSpec/ImplicitSubject:
+  Enabled: false
+
+RSpec/ContextWording:
+  Enabled: false
+
+RSpec/LeadingSubject:
+  Enabled: false
+
+RSpec/MessageSpies:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Max: 5
+
+RSpec/ExampleLength:
+  Max: 10
+  CountAsOne: ['array', 'heredoc', 'method_call']
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+RSpec/StubbedMock:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 5
+
+#
+# Rails
+#
+
+# Rails/BulkChangeTable:
+#   Exclude:
+#     - 'db/migrate/*_add_model_to_comfy_workflow.rb'
+#     - 'db/migrate/*_add_version_to_comfy_workflow.rb'
+
+Rails/ApplicationController:
+  Enabled: false
+
+
+# This is an internal app, and is likely never going to be translated
+Rails/I18nLocaleTexts:
+  Enabled: false

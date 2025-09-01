@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: profiles
@@ -24,8 +26,8 @@ class Profile < ApplicationRecord
   belongs_to :user, optional: false
 
   jsonb_accessor :data,
-                 title: [:string, { default: '' }],
-                 bio: [:string, { default: '' }]
+    title: [:string, default: ''],
+    bio: [:string, default: '']
 
   scope :with_distance, lambda { |point|
     select('*', arel_table[:location].st_distance(Arel.spatial(point)).as('distance'))

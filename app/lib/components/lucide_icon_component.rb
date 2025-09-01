@@ -10,7 +10,10 @@ module LucideIconComponent
   # even when they won't be used.
   def lucide_icon(_wrapper_options = nil)
     # rubocop:disable Rails/OutputSafety
-    @lucide_icon ||= (Render.new.lucide_icon(options[:lucide_icon]).html_safe if options[:lucide_icon].present?)
+    @lucide_icon ||= if options[:lucide_icon].present?
+                       Render.new.lucide_icon(options[:lucide_icon]).html_safe
+                     end
+
     # rubocop:enable all
   end
 end
