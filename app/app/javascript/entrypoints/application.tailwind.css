@@ -19,21 +19,3 @@ html, body {
   overflow-x: hidden;
   max-width: 100vw;
 }
-
-/* Scrollbar styling */
-/* ::-webkit-scrollbar { */
-/*   width: 6px; */
-/* } */
-
-/* ::-webkit-scrollbar-track { */
-/*   background: hsl(var(--muted)); */
-/* } */
-
-/* ::-webkit-scrollbar-thumb { */
-/*   background: hsl(var(--primary)); */
-/*   border-radius: 3px; */
-/* } */
-
-/* ::-webkit-scrollbar-thumb:hover { */
-/*   background: hsl(var(--primary) / 0.8); */
-/* } */

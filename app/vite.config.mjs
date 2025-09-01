@@ -1,7 +1,5 @@
 import { resolve } from "path"
-
 import { defineConfig } from 'vite'
-
 import Rails from "vite-plugin-rails"
 
 export default defineConfig({
@@ -30,10 +28,10 @@ export default defineConfig({
     })
   ],
   server: {
-    allowedHosts: [`chat.${process.env.DOMAIN}`],
-    origin: `chat.${process.env.DOMAIN}`,
+    allowedHosts: [`app.${process.env.DOMAIN}`],
+    origin: `app.${process.env.DOMAIN}`,
     hmr: {
-      host: `chat.${process.env.DOMAIN}`,
+      host: `app.${process.env.DOMAIN}`,
       clientPort: 80,
     },
   }
