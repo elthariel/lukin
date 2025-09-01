@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class EnablePostGISExtension < ActiveRecord::Migration[8.0]
+class EnablePostgisExtension < ActiveRecord::Migration[8.0]
   def up
     # Enable PostGIS extension in PostgreSQL
     enable_extension 'postgis'

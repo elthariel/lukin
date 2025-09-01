@@ -6,6 +6,7 @@ admin_constraint = lambda do |request|
 end
 
 Rails.application.routes.draw do
+  get "home/index"
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   constraints admin_constraint do
@@ -33,5 +34,5 @@ Rails.application.routes.draw do
   # get '/:locale' => 'home#index', as: 'root_i18n'
 
   # Defines the root path route ("/")
-  # root "posts#index"
+  root "home#index"
 end
