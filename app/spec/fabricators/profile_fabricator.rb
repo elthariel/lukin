@@ -36,6 +36,7 @@ Fabricator(:profile_base, class_name: 'Profile') do
   title     { FFaker::NameFR.first_name }
   bio       { FFaker::LoremFR.sentence }
   age       { rand(18..60) }
+  picture   { File.open PICS.sample }
 end
 
 Fabricator(:profile, from: :profile_base) do

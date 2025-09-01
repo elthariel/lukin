@@ -2,10 +2,14 @@
   <!-- Full screen carousel with basic infocs -->
   <div class="relative h-screen-safe w-screen flex flex-col">
     <!-- Profile picture -->
-    <img
-      src="https://files.mastodon.social/media_attachments/files/010/381/365/original/0e3cb5e92840be55.jpeg"
-      alt="Profile picture"
-      class="w-full h-full object-cover grow">
+    <% if @profile.picture.attached? %>
+      <%= image_tag @profile.picture, class: 'w-full h-full object-cover grow' %>
+    <% else %>
+      <div class="grow bg-gradient-to-br from-secondary/20
+                  to-primary/20 flex items-center justify-center">
+        <%= lucide_icon('user', class: 'w-8 h-8 text-secondary') %>
+      </div>
+    <% end %>
 
     <!-- Profile title, age & distance, CTA -->
     <div class="grow-0 w-full flex flex-col bg-base-100/50 px-4 pt-6 pb-2">

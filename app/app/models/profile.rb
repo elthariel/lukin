@@ -41,6 +41,11 @@ class Profile < ApplicationRecord
   scope :connected, -> { where('updated_at > ?', CONNECTED.ago ) }
 
   validates :age, numericality: { greater_than_or_equal_to: 18 }
+  validates :picture, blob: {
+      content_type: ["image/png", "image/jpg", "image/jpeg", "image/webp"],
+      size_range: 1..(8.megabytes)
+    }
+
 
   def self.location_factory
     # Longitude, Latitude
