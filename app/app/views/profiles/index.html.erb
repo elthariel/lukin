@@ -17,7 +17,7 @@
   <!-- Profiles Grid -->
   <div class="max-w-5xl mx-auto px-2 sm:px-6 lg:px-8 py-6">
     <% if @profiles.any? %>
-      <div class="grid grid-cols-3 md:grid-cols-6 gap-[2px]">
+      <div class="grid grid-cols-3 lg:grid-cols-6 gap-[2px]">
         <% @profiles.each do |profile| %>
           <a href="<%= profile_path(profile) %>"
             class="relative profile-card bg-neutral overflow-hidden transition-all

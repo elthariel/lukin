@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_01_224634) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_01_234654) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -76,6 +76,24 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_01_224634) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  end
+
+  create_table "chat_links", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "profile_id", null: false
+    t.uuid "other_profile_id", null: false
+    t.uuid "chat_id", null: false
+    t.boolean "blocked", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_id"], name: "index_chat_links_on_chat_id"
+    t.index ["other_profile_id"], name: "index_chat_links_on_other_profile_id"
+    t.index ["profile_id", "blocked"], name: "index_chat_links_on_profile_id_and_blocked"
+  end
+
+  create_table "chats", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.jsonb "messages"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "good_job_batches", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -209,5 +227,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_01_224634) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "chat_links", "chats"
+  add_foreign_key "chat_links", "profiles"
+  add_foreign_key "chat_links", "profiles", column: "other_profile_id"
   add_foreign_key "profiles", "users"
 end

@@ -27,6 +27,8 @@ class Profile < ApplicationRecord
   CONNECTED = 3.days
 
   belongs_to :user, optional: false
+  has_many :chat_links
+  has_many :chats, through: :chat_links
 
   jsonb_accessor :data,
     title: [:string, default: ''],

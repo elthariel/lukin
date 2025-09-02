@@ -18,6 +18,11 @@ class ApplicationController < ActionController::Base
     User.first
   end
 
+  helper_method :current_profile
+  def current_profile
+    current_user.profile
+  end
+
   def switch_locale(&)
     locale = params[:locale] ||
              http_accept_language.compatible_language_from(I18n.available_locales) ||
