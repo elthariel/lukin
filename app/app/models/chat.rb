@@ -3,11 +3,13 @@
 # Table name: chats
 #
 #  id         :uuid             not null, primary key
-#  messages   :jsonb
+#  messages   :jsonb            not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 class Chat < ApplicationRecord
+  include Chat::Messages
+
   has_many :chat_links
   has_many :profiles, through: :chat_links
 
@@ -38,5 +40,10 @@ class Chat < ApplicationRecord
     def find_or_create_between!(profile, other_profile, **kw)
       between(profile, other_profile) || create_between!(profile, other_profile, **kw)
     end
+  end
+
+  # Get the other profile in the chat for the current user
+  def other_profile_for(current_profile)
+    profiles.where.not(id: current_profile.id).first
   end
 end

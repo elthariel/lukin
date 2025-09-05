@@ -86,12 +86,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_01_234654) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["chat_id"], name: "index_chat_links_on_chat_id"
-    t.index ["other_profile_id"], name: "index_chat_links_on_other_profile_id"
     t.index ["profile_id", "blocked"], name: "index_chat_links_on_profile_id_and_blocked"
+    t.index ["profile_id", "other_profile_id"], name: "index_chat_links_on_profile_id_and_other_profile_id", unique: true
   end
 
   create_table "chats", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.jsonb "messages"
+    t.jsonb "messages", default: [], null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

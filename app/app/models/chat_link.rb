@@ -12,9 +12,9 @@
 #
 # Indexes
 #
-#  index_chat_links_on_chat_id                 (chat_id)
-#  index_chat_links_on_other_profile_id        (other_profile_id)
-#  index_chat_links_on_profile_id_and_blocked  (profile_id,blocked)
+#  index_chat_links_on_chat_id                          (chat_id)
+#  index_chat_links_on_profile_id_and_blocked           (profile_id,blocked)
+#  index_chat_links_on_profile_id_and_other_profile_id  (profile_id,other_profile_id) UNIQUE
 #
 # Foreign Keys
 #
