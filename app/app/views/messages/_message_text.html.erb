@@ -1,0 +1,10 @@
+<% classes = message_classes_for(me) %>
+<div class="flex <%= classes[:align] %>">
+  <div class="<%= classes[:bg] %> rounded-2xl <%= classes[:rounded] %> px-4 py-2
+              max-w-xs sm:max-w-sm md:max-w-md">
+    <div class="text-white text-sm"><%= message.text %></div>
+    <div class="text-xs <%= classes[:fg] %> mt-1 text-right">
+      <%= message.sent_at.to_formatted_s(:time) %>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,52 @@
-Lukin?
+<%# Chat page similar to Grindr %>
+<div class="bg-base-100 text-white min-h-screen-safe w-screen flex flex-col">
+  <%# Header with profile info %>
+  <header class="bg-base-100 border-b border-gray-800 px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center">
+      <a href="<%= profiles_path %>" class="mr-3">
+        <%= lucide_icon('arrow-left', class: 'w-6 h-6') %>
+      </a>
+      <div class="flex items-center">
+        <%# Profile picture %>
+        <% if @other_profile&.picture&.attached? %>
+          <%= image_tag @other_profile.picture, class: 'w-10 h-10 rounded-full object-cover mr-2' %>
+        <% else %>
+          <div class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center mr-2">
+            <%= lucide_icon('user', class: 'w-5 h-5 text-gray-400') %>
+          </div>
+        <% end %>
+        <div>
+          <div class="font-semibold"><%= @other_profile&.title.presence || "Profile" %></div>
+          <div class="text-xs text-gray-400">
+            <% if @other_profile&.active? %>
+              Online now
+            <% else %>
+              Offline
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center">
+      <button class="p-2">
+        <%= lucide_icon('phone', class: 'w-5 h-5') %>
+      </button>
+      <button class="p-2">
+        <%= lucide_icon('more-vertical', class: 'w-5 h-5') %>
+      </button>
+    </div>
+  </header>
+
+
+  <%# Messages area %>
+  <turbo-frame id="chat-messages-<%= @chat.id %>"
+    src="<%= chat_messages_path(@chat) %>"
+    class="flex flex-col overflow-y-auto p-4 space-y-4 bg-gray-900"
+  >
+  </turbo-frame>
+
+  <%# Input area %>
+  <div class="bg-base-100 border-t border-gray-800 p-3">
+    <%= render partial: 'input', locals: { chat: @chat } %>
+  </div>
+</div>

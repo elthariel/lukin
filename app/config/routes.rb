@@ -27,7 +27,9 @@ Rails.application.routes.draw do
   resources :profiles do
     resources :chats, only: :create
   end
-  resources :chats, except: :create
+  resources :chats, except: :create do
+    resources :messages, only: [:index, :create]
+  end
 
   # Render dynamic PWA files from app/views/pwa/*
   # (Manifest linked from application.html.erb)

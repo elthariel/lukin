@@ -1,0 +1,33 @@
+<div class="flex items-center">
+  <button class="p-1">
+    <%= lucide_icon('plus', class: 'w-5 h-5') %>
+  </button>
+
+  <%= simple_form_for(
+    Chat::TextMessage.new,
+    url: chat_messages_path(chat),
+    html: {
+      class: "flex-1 flex items-center",
+      turbo_stream: true
+    }
+  ) do |f| %>
+    <div class="flex-1 mx-2 bg-gray-800 rounded-full">
+      <%= f.text_field :text,
+       placeholder: 'Say something...',
+       autocomplete: 'off',
+       class: 'w-full rounded-full bg-transparent border-0 focus:ring-0 text-white py-2 px-4 ',
+       html: {
+         data: {
+
+         }
+       }
+      %>
+    </div>
+    <%= button_tag(
+      type: :button,
+      class: "p-1 hover:scale-110 transition-transform duration-200"
+    ) do %>
+      <%= lucide_icon('send', class: 'w-5 h-5') %>
+    <% end %>
+  <% end %>
+</div>

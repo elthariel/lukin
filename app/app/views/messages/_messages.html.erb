@@ -1,0 +1,5 @@
+<% messages.each do |message| %>
+  <% partial_name = "message_#{message.type}" %>
+  <% me = message.from? current_user %>
+  <%= render partial: partial_name, locals: { chat:, message:, me: } %>
+<% end %>

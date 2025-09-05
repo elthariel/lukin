@@ -11,6 +11,7 @@ class ChatsController < ApplicationController
   end
 
   def show
+    @other_profile = @chat.other_profile_for(current_profile)
   end
 
   private
