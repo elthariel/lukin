@@ -6,7 +6,7 @@ RSpec.describe Chat::ApplicationMessage do
   let(:attributes) do
     {
       type: :application,
-      user_id: 'qwe',
+      profile_id: 'qwe',
       sent_at: DateTime.current,
       idx: 0
     }
@@ -23,7 +23,7 @@ RSpec.describe Chat::ApplicationMessage do
 
       expect(subject.class).to eq from_json.class
       expect(subject.idx).to eq from_json.idx
-      expect(subject.user_id).to eq from_json.user_id
+      expect(subject.profile_id).to eq from_json.profile_id
     end
   end
 end

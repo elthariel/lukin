@@ -1,0 +1,6 @@
+<% target = "chat-messages-#{ @chat.id }" %>
+<%= turbo_stream.append target do %>
+    <%= render partial: 'message',
+               locals: { chat: @chat, message: @message, me: true } %>
+<% end %>
+<%= turbo_stream.action :scroll, target %>

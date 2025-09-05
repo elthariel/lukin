@@ -15,7 +15,14 @@
   }
 }
 
-html, body {
+html,
+body {
   overflow-x: hidden;
   max-width: 100vw;
+}
+
+.chat {
+  .message-me + .message-me{
+    @apply mt-2;
+  }
 }

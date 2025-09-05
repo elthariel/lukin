@@ -31,24 +31,15 @@ module Chat::Messages
   end
 
   def add_message(msg)
-    if msg.is_a? String
-      msg = ApplicationMessage.from_json(msg)
-    else
-      msg = msg.clone
-    end
+    msg = self.class.message.from msg
 
-    # This is likely a lot of extra object for nothing :sob:
-    msg = msg.deep_dup
     msg.idx = messages_raw.count
     msg.sent_at = DateTime.current
 
-    if msg.valid?
-      messages_raw.append(msg.attributes)
-      true
-    else
-      errors.merge! msg.errors
-      false
-    end
+    errors.merge! msg.errors unless msg.valid?
+    messages_raw.append(msg.attributes)
+
+    msg
   end
 
   def clear_messages

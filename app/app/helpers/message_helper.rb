@@ -7,17 +7,21 @@ module MessageHelper
         align: 'justify-end text-right',
         bg: 'bg-gray-800',
         fg: 'opacity-50',
-        rounded: 'rounded-br-none'
+        rounded: 'rounded-br-none',
+        peer: 'message-me',
       }
     else
       {
         align: 'justify-start text-left',
         bg: 'bg-primary',
         fg: 'opacity-80',
-        rounded: 'rounded-bl-none'
+        rounded: 'rounded-bl-none',
+        peer: 'message-other',
       }
     end
   end
 
-
+  def message_partial(message)
+    "messages/message_#{message.type}"
+  end
 end

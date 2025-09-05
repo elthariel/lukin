@@ -11,6 +11,7 @@ class ChatsController < ApplicationController
   end
 
   def show
+    @chat_link = @chat.chat_link_for(current_profile)
     @other_profile = @chat.other_profile_for(current_profile)
   end
 
@@ -21,6 +22,6 @@ class ChatsController < ApplicationController
   end
 
   def load_chat
-    @chat = Chat.find(params[:id])
+    @chat = Chat.includes(:profiles).find(params[:id])
   end
 end

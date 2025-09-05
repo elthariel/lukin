@@ -1,0 +1,4 @@
+<% classes = message_classes_for(me) %>
+<div class="message message-text flex <%= classes[:align] %> <%= classes[:peer] %>">
+  <%= render partial: message_partial(message), locals: { chat:, message:, me: } %>
+</div>

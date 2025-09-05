@@ -1,8 +1,8 @@
-import "@hotwired/turbo-rails"
-import "~/controllers"
-import "~/turbo_actions"
-import "~/prefetch"
-import "~/posthog"
+import "@hotwired/turbo-rails";
+import "~/controllers";
+import "~/turbo_actions";
+import "~/prefetch";
+// import "~/posthog"
 
 // Example: Load Rails libraries in Vite.
 //

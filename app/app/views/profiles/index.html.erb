@@ -1,66 +1,9 @@
-<div class="bg-base-100 text-white">
+<div class="bg-base-100 text-white mb-12 flex flex-col h-screen-safe">
   <!-- Header -->
-  <div class="sticky top-0 z-10 bg-base-100/90 backdrop-blur-sm border-b border-neutral">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
-        <div class="flex items-center">
-          <h1 class="text-xl font-bold">Profiles</h1>
-        </div>
-        <div class="flex items-center space-x-4">
-          <!-- Add filter/sort icons here if needed -->
-          <%= lucide_icon('filter', class: 'w-5 h-5') %>
-        </div>
-      </div>
-    </div>
-  </div>
+  <%= render partial: 'index_header' %>
+  <%= render partial: 'grid', locals: { profiles: @profiles } %>
 
-  <!-- Profiles Grid -->
-  <div class="max-w-5xl mx-auto px-2 sm:px-6 lg:px-8 py-6">
-    <% if @profiles.any? %>
-      <div class="grid grid-cols-3 lg:grid-cols-6 gap-[2px]">
-        <% @profiles.each do |profile| %>
-          <a href="<%= profile_path(profile) %>"
-            class="relative profile-card bg-neutral overflow-hidden transition-all
-                   duration-300 hover:scale-[1.02]">
+  <div class="w-full fixed bottom-0 h-12 bg-neutral">
 
-            <!-- Profile Image Placeholder -->
-            <div class="">
-              <% if profile.picture.attached? %>
-                <div class="aspect-square bg-gradient-to-br from-secondary/20
-                            to-primary/20 flex items-center justify-center">
-                  <%= image_tag profile.picture, class: "object-cover aspect-square" %>
-                </div>
-
-              <% else %>
-                <div class="aspect-square bg-gradient-to-br from-secondary/20
-                            to-primary/20 flex items-center justify-center">
-                  <%= lucide_icon('user', class: 'w-8 h-8 text-secondary') %>
-                </div>
-              <% end %>
-            </div>
-
-            <!-- Profile Title & Presence -->
-            <div class="absolute bottom-0 w-full">
-              <div class="flex items-center justify-left gap-1 py-1 px-2 bg-base-100/60">
-                <% if profile.active? %>
-                  <div class="w-2 h-2 rounded-full bg-primary border-gray-500"></div>
-                <% end %>
-                <h3 class="text-sm truncate tracking-wide">
-                  <%= profile.title.presence %>
-                </h3>
-              </div>
-            </div>
-          </a>
-        <% end %>
-      </div>
-    <% else %>
-      <div class="text-center py-12">
-        <div class="mx-auto w-16 h-16 rounded-full bg-neutral flex items-center justify-center mb-4">
-          <%= lucide_icon('users', class: 'w-8 h-8 text-neutral-content') %>
-        </div>
-        <h3 class="text-lg font-medium text-neutral-content">No profiles found</h3>
-        <p class="mt-1 text-sm text-neutral-content">Try adjusting your filters or check back later</p>
-      </div>
-    <% end %>
   </div>
 </div>

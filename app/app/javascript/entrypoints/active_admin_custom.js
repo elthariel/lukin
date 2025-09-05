@@ -1,5 +1,5 @@
-import HightlightJS from 'highlight.js';
-import HighlightedCode from 'highlighted-code';
+import HightlightJS from "highlight.js";
+import HighlightedCode from "highlighted-code";
 
-HighlightedCode.useTheme('monokai');
+HighlightedCode.useTheme("monokai");
 HightlightJS.highlightAll();

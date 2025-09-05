@@ -34,7 +34,9 @@ class Profile < ApplicationRecord
     title: [:string, default: ''],
     bio: [:string, default: '']
 
-  has_one_attached :picture
+  has_one_attached :picture do |pic|
+    pic.variant :thumbnail, resize_to_fill: [500, 500]
+  end
 
   scope :with_distance, lambda { |point|
     select('*', arel_table[:location].st_distance(Arel.spatial(point)).as('distance'))
@@ -47,7 +49,6 @@ class Profile < ApplicationRecord
       content_type: ["image/png", "image/jpg", "image/jpeg", "image/webp"],
       size_range: 1..(8.megabytes)
     }
-
 
   def self.location_factory
     # Longitude, Latitude

@@ -12,6 +12,7 @@ class Chat < ApplicationRecord
 
   has_many :chat_links
   has_many :profiles, through: :chat_links
+  has_many :users, through: :profiles
 
   class << self
     def between_scope(profile, other_profile)
@@ -45,5 +46,13 @@ class Chat < ApplicationRecord
   # Get the other profile in the chat for the current user
   def other_profile_for(current_profile)
     profiles.where.not(id: current_profile.id).first
+  end
+
+  def chat_link_for(current_profile)
+    chat_links.find { |link| link.profile_id == current_profile.id }
+  end
+
+  def other_chat_link_for(current_profile)
+    chat_links.find { |link| link.other_profile_id == current_profile.id }
   end
 end

@@ -14,10 +14,6 @@ class ApplicationController < ActionController::Base
   around_action :switch_locale
   before_action :authenticate_user!
 
-  def current_user
-    User.first
-  end
-
   helper_method :current_profile
   def current_profile
     current_user.profile
