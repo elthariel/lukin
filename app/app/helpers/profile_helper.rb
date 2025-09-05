@@ -17,4 +17,24 @@ module ProfileHelper
       "#{km} km"
     end
   end
+
+  def format_attr_height(value)
+    "#{value / 100.0} m"
+  end
+
+  def format_attr_weight(value)
+    "#{value} kg"
+  end
+
+  def format_attr_position(value)
+    Profile.human_enum_name(:position, value)
+  end
+
+  def format_attr_body(value)
+    Profile.human_enum_name(:body, value)
+  end
+
+  def format_attr_gender(value)
+    Profile.human_enum_name(:gender, value)
+  end
 end

@@ -6,8 +6,13 @@
 #
 #  id         :uuid             not null, primary key
 #  age        :integer
+#  body       :integer          default("unknown"), not null
 #  data       :jsonb            not null
+#  gender     :integer          default("unknown"), not null
+#  height     :integer
 #  location   :geography        point, 4326
+#  position   :integer          default("unknown"), not null
+#  weight     :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  user_id    :uuid             not null

@@ -72,23 +72,44 @@
   </div>
 
   <!-- Profile section -->
-  <div class="p-4">
-    <h2 class="text-xl font-bold text-secondary mb-2">Bio</h2>
+  <div class="px-4 py-6">
     <div class="text-neutral-content flex flex-wrap">
       <%= @profile.bio %>
     </div>
   </div>
 
-  <!-- Interests section -->
-  <div class="px-4">
-    <h2 class="text-xl font-bold text-secondary mb-2">Interests</h2>
-    <div class="text-neutral-content flex flex-wrap">
-      <div class="mr-4">Music</div>
-      <div class="mr-4">Travel</div>
-      <div class="mr-4">Photography</div>
-      <div class="mr-4">Cooking</div>
-      <div class="mr-4">Hiking</div>
-    </div>
+  <!-- Attributes section -->
+  <div class="text-gray-200">
+    <table class="table">
+      <thead></thead>
+      <tbody>
+        <% %i[weight height].each do |name| %>
+          <% if @profile.send(name).present? && !@profile.send("hide_#{name}") %>
+            <tr class="text-lg">
+              <th class="tracking-wider">
+                <%= Profile.human_attribute_name(name) %>
+              </th>
+              <td>
+                <%= send "format_attr_#{name}", @profile.send(name) %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+
+        <% %i[position body gender].each do |name| %>
+          <% unless @profile.send("#{name}_unknown?") || @profile.send("hide_#{name}") %>
+            <tr class="text-lg">
+              <th class="tracking-wider">
+                <%= Profile.human_attribute_name(name) %>
+              </th>
+              <td>
+                <%= send "format_attr_#{name}", @profile.send(name) %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 
 

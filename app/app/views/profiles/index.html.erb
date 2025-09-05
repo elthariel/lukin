@@ -1,9 +1,21 @@
-<div class="bg-base-100 text-white mb-12 flex flex-col h-screen-safe">
+<div class="bg-base-100 text-white flex flex-col h-screen-safe">
   <!-- Header -->
-  <%= render partial: 'index_header' %>
-  <%= render partial: 'grid', locals: { profiles: @profiles } %>
 
-  <div class="w-full fixed bottom-0 h-12 bg-neutral">
-
+  <div class="sticky top-0 z-10
+              bg-base-100/90 backdrop-blur-sm border-b border-neutral">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <%= render partial: 'index_header' %>
+    </div>
   </div>
+
+  <section class="grow overflow-y-auto
+                  max-w-5xl mx-auto">
+    <!-- Main content area that scrolls -->
+    <%= render partial: 'grid', locals: { profiles: @profiles } %>
+  </section>
+
+  <!-- Footer -->
+  <nav class="grow-0 shrink-0 w-full bg-neutral">
+    <%= render partial: 'index_footer' %>
+  </nav>
 </div>

@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   #   end
   # end
 
-  resources :profiles do
+  resources :profiles, only: %i[index show edit update] do
     resources :chats, only: :create
   end
   resources :chats, except: :create do

@@ -6,8 +6,13 @@
 #
 #  id         :uuid             not null, primary key
 #  age        :integer
+#  body       :integer          default("unknown"), not null
 #  data       :jsonb            not null
+#  gender     :integer          default("unknown"), not null
+#  height     :integer
 #  location   :geography        point, 4326
+#  position   :integer          default("unknown"), not null
+#  weight     :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  user_id    :uuid             not null
@@ -30,13 +35,30 @@ class Profile < ApplicationRecord
   has_many :chat_links
   has_many :chats, through: :chat_links
 
-  jsonb_accessor :data,
-    title: [:string, default: ''],
-    bio: [:string, default: '']
-
   has_one_attached :picture do |pic|
     pic.variant :thumbnail, resize_to_fill: [500, 500]
   end
+
+  jsonb_accessor :data,
+    title: [:string, default: ''],
+    bio: [:string, default: ''],
+    hide_age: [:boolean, default: false],
+    hide_height: [:boolean, default: false],
+    hide_weight: [:boolean, default: false],
+    hide_position: [:boolean, default: false],
+    hide_body: [:boolean, default: false],
+    hide_gender: [:boolean, default: false]
+
+  enum :position, {
+      unknown: 0, soft: 1, top: 2, versatile_top: 3, versatile: 4,
+      versatile_bottom: 5, bottom: 6,
+    }, prefix: true
+  enum :body, {
+      unknown: 0, thin: 1, average: 2, toned: 3, muscular: 5, large: 6
+    }, prefix: true
+  enum :gender, {
+      unknown: 0, other: 1, cis: 2, queer: 3, trans: 4, non_binary: 5, fluid: 6, nope: 7
+    }, prefix: true
 
   scope :with_distance, lambda { |point|
     select('*', arel_table[:location].st_distance(Arel.spatial(point)).as('distance'))
@@ -45,6 +67,9 @@ class Profile < ApplicationRecord
   scope :connected, -> { where('updated_at > ?', CONNECTED.ago ) }
 
   validates :age, numericality: { greater_than_or_equal_to: 18 }
+  validates :height, numericality: { in: (50..260) }
+  validates :weight, numericality: { in: (10..500) }
+
   validates :picture, blob: {
       content_type: ["image/png", "image/jpg", "image/jpeg", "image/webp"],
       size_range: 1..(8.megabytes)
@@ -58,5 +83,15 @@ class Profile < ApplicationRecord
   # We assume the user is online/active if they updated their profile/location recently
   def active?
     updated_at > ACTIVE.ago
+  end
+
+  def hide_nothing!
+    update(
+      hide_age: false,
+      hide_position: false,
+      hide_height: false,
+      hide_weight: false,
+      hide_body: false
+    )
   end
 end

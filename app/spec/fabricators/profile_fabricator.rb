@@ -6,8 +6,13 @@
 #
 #  id         :uuid             not null, primary key
 #  age        :integer
+#  body       :integer          default("unknown"), not null
 #  data       :jsonb            not null
+#  gender     :integer          default("unknown"), not null
+#  height     :integer
 #  location   :geography        point, 4326
+#  position   :integer          default("unknown"), not null
+#  weight     :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  user_id    :uuid             not null
@@ -35,8 +40,21 @@ Fabricator(:profile_base, class_name: 'Profile') do
   end
   title     { FFaker::NameFR.first_name }
   bio       { FFaker::LoremFR.sentence }
-  age       { rand(18..60) }
   picture   { File.open PICS.sample }
+
+  age       { rand(18..60) }
+  weight    { rand(50...120) }
+  height    { rand(140...220) }
+  position  { Profile.positions.keys.sample }
+  body      { Profile.bodies.keys.sample }
+  gender    { Profile.genders.keys.sample }
+
+  hide_age       { [true, false].sample }
+  hide_weight    { [true, false].sample }
+  hide_height    { [true, false].sample }
+  hide_position  { [true, false].sample }
+  hide_body      { [true, false].sample }
+  hide_gender    { [true, false].sample }
 end
 
 Fabricator(:profile, from: :profile_base) do

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_01_234654) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_05_175542) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -191,6 +191,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_01_234654) do
     t.jsonb "data", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "height"
+    t.integer "weight"
+    t.integer "position", default: 0, null: false
+    t.integer "body", default: 0, null: false
+    t.integer "gender", default: 0, null: false
     t.index ["location"], name: "index_profiles_on_location", using: :gist
     t.index ["updated_at", "age"], name: "index_profiles_on_updated_at_and_age"
     t.index ["user_id"], name: "index_profiles_on_user_id"

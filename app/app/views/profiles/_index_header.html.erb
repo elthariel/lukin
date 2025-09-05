@@ -1,15 +1,19 @@
 <!-- Header -->
-<div class="sticky top-0 z-10
-            bg-base-100/90 backdrop-blur-sm border-b border-neutral">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-16">
-      <div class="flex items-center">
-        <h1 class="text-xl font-bold">Profiles</h1>
+<div class="flex items-center justify-between h-12">
+  <div class="flex items-center">
+    <a class="text-xl font-bold" href="<%= edit_profile_path('me')  %>">
+      <div class="w-8 h-8 ring-1 rounded-full overflow-hidden flex items-center justify-center">
+        <% if current_profile.picture.attached? %>
+          <%= image_tag current_profile.picture.variant(:thumbnail), class: "w-full h-full object-cover" %>
+        <% else %>
+          <%= lucide_icon('user', class: 'w-8 h-8 text-gray-500') %>
+        <% end %>
       </div>
-      <div class="flex items-center space-x-4">
-        <!-- Add filter/sort icons here if needed -->
-        <%= lucide_icon('filter', class: 'w-5 h-5') %>
-      </div>
-    </div>
+    </a>
+    <h1 class="ml-3 text-xl font-bold">U Lukin ?</h1>
+  </div>
+  <div class="flex items-center space-x-4">
+    <!-- Add filter/sort icons here if needed -->
+    <%= lucide_icon('filter', class: 'w-5 h-5') %>
   </div>
 </div>
