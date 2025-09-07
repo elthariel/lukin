@@ -2,18 +2,17 @@
 
 ## 1. User Registration & Authentication
 - **TODO**
-  - [] Add Devise for email/phone sign‑up.
+  - [x] Add Devise for email/phone sign‑up.
+  - [] Style devise pages with daisy/tailwind
   - [] Implement password reset & email/phone verification.
-  - [] Wire Turbo Frames for the sign‑up flow.
+  - [] Wire Turbo Frames for the sign‑up flow. (???)
 - **Notes**
-  - Keep the API thin; use Rails 8’s built‑in API mode.
   - Service worker should cache the login page for offline access.
 
 ## 2. Profile Creation & Editing
 - **TODO**
-  - [] Create `UserProfile` model with fields: `name`, `age`, `gender`, `pronouns`, `bio`.
-  - [] Attach photos via ActiveStorage (image variants for thumbnails).
-  - [] Build Turbo Streams for live preview of profile changes.
+  - [x] Create `UserProfile` model with fields: `name`, `age`, `gender`, `pronouns`, `bio`.
+  - [/] Attach photos via ActiveStorage (image variants for thumbnails).
   - [] Stimulus controller for image upload preview.
 - **Notes**
   - All users are always visible; no “invisible” flag.
@@ -22,36 +21,37 @@
 ## 3. Geolocation & Nearby Users
 - **TODO**
   - [] Request location permission on first visit.
-  - [] Store user’s last known coordinates in `users` table (PostGIS `geography` column).
-  - [] Create a `nearby_users` endpoint that returns users within a configurable radius.
+  - [x] Store user’s last known coordinates in `users` table (PostGIS `geography` column).
+  - [x] Create a `profiles#index` endpoint that returns users.
   - [] Use Turbo Streams to push new nearby users as they appear.
+    - Not sure. Will probably just do a refresh
 - **Notes**
-  - Use PostGIS for efficient distance queries.
+  - [x] Use PostGIS for efficient distance queries.
   - Cache the result for a short period to reduce DB load.
 
 ## 4. User Discovery & Filtering
 - **TODO**
-  - [] Build a grid view (Turbo Frame) that lists nearby users.
+  - [x] Build a grid view (Turbo Frame) that lists nearby users.
   - [] Add filter controls (distance, age range, gender) in a separate Turbo Frame.
   - [] Stimulus controller to submit filter changes via AJAX and update the grid.
 - **Notes**
   - Keep the UI responsive; avoid full page reloads.
-  - Store filter preferences in localStorage for persistence.
+  - [] Store filter preferences in localStorage for persistence.
 
 ## 5. “Tap” Interaction
 - **TODO**
-  - [] Implement a tap handler (Stimulus) that navigates to a dedicated profile page for the tapped user.
-  - [] Provide a “Start Chat” button on that page.
+  - [x] Implement a dedicated profile page for the clicked user.
+  - [x] Provide a “Start Chat” button on that page.
 - **Notes**
-  - Use Turbo Frames to load the profile page content.
   - Ensure accessibility: focus trap, ARIA roles.
 
 ## 6. Messaging
 - **TODO**
-  - [] Create `Chat` model with columns: `user_a_id`, `user_b_id`, `messages` (jsonb).
-  - [] Store each message as a JSON object: `{ sender_id:, body:, timestamp: }`.
-  - [] Build a chat view (Turbo Frame) that streams new messages via ActionCable.
-  - [] Stimulus controller for sending messages and auto‑scrolling.
+  - [x] Create `Chat` model with jsonb `messages` columns
+  - [x] Create a `ChakLink` model to link profile to chats
+  - [x] Store each message as a JSON object: `{ profile_id:, body:, sent_at: }`.
+  - [x] Build a chat view (Turbo Frame) that streams new messages via ActionCable.
+  - [x] Stimulus controller for sending messages and auto‑scrolling.
 - **Notes**
   - No separate `Message` table; all conversation history lives in the `messages` jsonb column.
   - This limits history size but reduces write‑scale overhead.
@@ -69,7 +69,7 @@
 ## 8. User Settings & Privacy
 - **TODO**
   - [] Build a settings page (Turbo Frame) for:
-    - [] Editing profile.
+    - [/] Editing profile.
     - [] Blocking users (create `Block` model).
     - [] Managing notification preferences.
   - [] Stimulus controller for toggle switches.
@@ -95,9 +95,9 @@
 
 ## 11. Front‑end Stack
 - **TODO**
-  - [] Add Tailwind CSS via `vite-rails`.
-  - [] Configure Vite for Hotwired (Turbo & Stimulus).
-  - [] Ensure Tailwind is purged for production.
+  - [x] Add Tailwind CSS via `vite-rails`.
+  - [x] Configure Vite for Hotwired (Turbo & Stimulus).
+  - [x] Ensure Tailwind is purged for production.
 
 ---
 
