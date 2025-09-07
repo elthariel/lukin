@@ -4,18 +4,19 @@
 #
 # Table name: profiles
 #
-#  id         :uuid             not null, primary key
-#  age        :integer
-#  body       :integer          default("unknown"), not null
-#  data       :jsonb            not null
-#  gender     :integer          default("unknown"), not null
-#  height     :integer
-#  location   :geography        point, 4326
-#  position   :integer          default("unknown"), not null
-#  weight     :integer
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  user_id    :uuid             not null
+#  id           :uuid             not null, primary key
+#  age          :integer
+#  body         :integer          default("unknown"), not null
+#  data         :jsonb            not null
+#  gender       :integer          default("unknown"), not null
+#  height       :integer
+#  location     :geography        point, 4326
+#  position     :integer          default("unknown"), not null
+#  relationship :integer          default("unknown"), not null
+#  weight       :integer
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  user_id      :uuid             not null
 #
 # Indexes
 #
@@ -42,12 +43,10 @@ class Profile < ApplicationRecord
   jsonb_accessor :data,
     title: [:string, default: ''],
     bio: [:string, default: ''],
+    hide_distance: [:boolean, default: false],
     hide_age: [:boolean, default: false],
     hide_height: [:boolean, default: false],
-    hide_weight: [:boolean, default: false],
-    hide_position: [:boolean, default: false],
-    hide_body: [:boolean, default: false],
-    hide_gender: [:boolean, default: false]
+    hide_weight: [:boolean, default: false]
 
   enum :position, {
       unknown: 0, soft: 1, top: 2, versatile_top: 3, versatile: 4,
@@ -58,6 +57,9 @@ class Profile < ApplicationRecord
     }, prefix: true
   enum :gender, {
       unknown: 0, other: 1, cis: 2, queer: 3, trans: 4, non_binary: 5, fluid: 6, nope: 7
+    }, prefix: true
+  enum :relationship, {
+      unknown: 0, single: 1, couple: 2, free_couple: 3, married: 4, poly: 5
     }, prefix: true
 
   scope :with_distance, lambda { |point|

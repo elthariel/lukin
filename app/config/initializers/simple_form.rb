@@ -58,7 +58,7 @@ SimpleForm.setup do |config|
     ## Inputs
     b.use :label, class: 'label-text', wrap_with: { tag: :div, class: :label }
     b.use :input, error_class: 'text-error', valid_class: 'text-success',
-      class: 'text-white bg-slate-900 px-4 py-3 w-full'
+      class: 'px-4 py-3 w-full'
     b.use :hint,  wrap_with: { tag: :label, class: 'label-text-alt' }
     b.use :error, wrap_with: { tag: :label, class: %w[label-text-alt text-error] }
 
@@ -83,14 +83,14 @@ SimpleForm.setup do |config|
     ## Inputs
     b.use :label, class: 'label-text', wrap_with: { tag: :div, class: :label }
     b.wrapper :icon_wrapper, tag: :label,
-      class: 'input input-bordered flex items-center gap-3 rounded-lg
-        bg-slate-800 border-slate-700 px-4 py-3 gap-3
-        focus-within:border-blue-500 focus-within:ring-1
-        focus-within:ring-blue-500' do |comp|
+      class: 'input input-bordered flex items-center
+        gap-2 rounded-lg px-4 py-2
+        focus-within:ring-1 focus-within:ring-primary' do |comp|
       comp.use :lucide_icon
-      comp.use :input, class: 'w-full text-white bg-slate-900 px-4 py-3',
+      comp.use :input, class: 'w-full text-white px-4 py-3',
         error_class: 'text-error',
         valid_class: 'text-success'
+      comp.use :unit, wrap_with: { tag: :span, class: 'text-gray-400' }
     end
     b.wrapper tag: :div, class: 'label', unless_blank: true do |comp|
       comp.use :hint,  wrap_with: { tag: :label, class: 'label-text-alt' }

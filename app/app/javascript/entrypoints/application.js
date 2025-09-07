@@ -17,3 +17,11 @@ import "~/prefetch";
 
 // Example: Import a stylesheet in app/frontend/index.css
 // import '~/index.css'
+
+document.addEventListener('turbo:load', () => {
+  let here = document.querySelector('#here');
+
+  if (here) {
+    here.scrollIntoView({ behavior: 'smooth' });
+  }
+})

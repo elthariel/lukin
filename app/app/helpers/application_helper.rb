@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  def enum_for_select(model, enum)
+    collection = model.class.send(enum.to_s.pluralize).keys
+      .to_h { |item| [model.class.human_enum_name(enum, item), item] }
+
+    options_for_select(collection, model.send(enum))
+  end
+
   def notice_level_to_class(level)
     case level.to_sym
     when :notice

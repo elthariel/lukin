@@ -4,18 +4,19 @@
 #
 # Table name: profiles
 #
-#  id         :uuid             not null, primary key
-#  age        :integer
-#  body       :integer          default("unknown"), not null
-#  data       :jsonb            not null
-#  gender     :integer          default("unknown"), not null
-#  height     :integer
-#  location   :geography        point, 4326
-#  position   :integer          default("unknown"), not null
-#  weight     :integer
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  user_id    :uuid             not null
+#  id           :uuid             not null, primary key
+#  age          :integer
+#  body         :integer          default("unknown"), not null
+#  data         :jsonb            not null
+#  gender       :integer          default("unknown"), not null
+#  height       :integer
+#  location     :geography        point, 4326
+#  position     :integer          default("unknown"), not null
+#  relationship :integer          default("unknown"), not null
+#  weight       :integer
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  user_id      :uuid             not null
 #
 # Indexes
 #
@@ -48,13 +49,12 @@ Fabricator(:profile_base, class_name: 'Profile') do
   position  { Profile.positions.keys.sample }
   body      { Profile.bodies.keys.sample }
   gender    { Profile.genders.keys.sample }
+  relationship { Profile.relationships.keys.sample }
 
+  hide_distance  { [true, false].sample }
   hide_age       { [true, false].sample }
   hide_weight    { [true, false].sample }
   hide_height    { [true, false].sample }
-  hide_position  { [true, false].sample }
-  hide_body      { [true, false].sample }
-  hide_gender    { [true, false].sample }
 end
 
 Fabricator(:profile, from: :profile_base) do

@@ -37,4 +37,8 @@ module ProfileHelper
   def format_attr_gender(value)
     Profile.human_enum_name(:gender, value)
   end
+
+  def format_attr_relationship(value)
+    Profile.human_enum_name(:relationship, value)
+  end
 end

@@ -1,0 +1,171 @@
+<div class="bg-base-100 text-white min-h-screen-safe w-screen flex flex-col">
+  <!-- Header -->
+  <div class="sticky top-0 z-10 bg-base-100/90 backdrop-blur-sm border-b border-neutral">
+    <div class="flex items-center justify-between px-4 py-3">
+      <a href="<%= profile_path(@profile) %>"
+         class="btn btn-circle bg-base-100/85 hover:bg-base-100 border-0">
+        <%= lucide_icon('arrow-left', class: 'w-6 h-6') %>
+      </a>
+
+      <h1 class="text-xl font-accent">Edit Profile</h1>
+
+      <div class="w-6"></div> <!-- Spacer for symmetry -->
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="flex-grow overflow-y-auto">
+    <%= simple_form_for @profile do |f| %>
+      <!-- Profile Picture Section -->
+      <div class="bg-base-200 border-b pb-4 border-neutral">
+        <div class="flex flex-col items-center gap-4">
+          <% if @profile.picture.attached? %>
+            <%= image_tag @profile.picture, class: "w-full object-cover aspect-square" %>
+          <% else %>
+            <div class="flex items-center justify-center w-full aspect-square
+                        bg-gradient-to-br from-secondary/20 to-primary/20 ">
+              <%= lucide_icon('user', class: 'w-40 h-40 text-gray-400') %>
+            </div>
+          <% end %>
+
+          <div class="w-full px-4">
+            <%= f.file_field(
+              :picture,
+              class: "file-input file-input-bordered w-full",
+              accept: 'image/webp, image/jpeg, image/png'
+            ) %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Basic Info Section -->
+      <div class="bg-base-200 rounded-xl p-4">
+        <h2 class="text-lg mb-3">
+          Your profile
+        </h2>
+
+        <div class="space-y-4">
+          <!-- Title -->
+          <a id="here"></a>
+          <%= f.input(
+            :title,
+            wrapper: :icon_input,
+            label: false,
+            lucide_icon: 'user',
+            placeholder: 'Profile title',
+            lucide_icon_class: 'text-gray-500',
+            label_html: {class: 'font-accent'},
+          ) %>
+
+
+          <!-- Bio -->
+          <div>
+            <label class="form-control">
+              <!-- <div class="label">
+                   </div> -->
+              <%= f.input_field(
+                :bio, as: :text,
+                class: "textarea textarea-bordered h-32",
+                placeholder: "Your bio"
+              ) %>
+              <!-- <div class="label">
+                   <span class="label-text-alt">Your bio</span>
+                   <span class="label-text-alt">Alt label</span>
+                   </div> -->
+            </label>
+          </div>
+        </div>
+
+        <div class="space-y-4 mt-8">
+          <!-- Age -->
+          <div class="flex items-center gap-4">
+            <%= f.input(
+              :age,
+              type: :number,
+              wrapper: :icon_input,
+              wrapper_html: {class: 'grow'},
+              label: false,
+              placeholder: 'Age',
+              lucide_icon: 'baby',
+              lucide_icon_class: 'text-gray-500',
+              input_html: {min: 18},
+              label_html: {class: 'font-accent'},
+            ) %>
+
+            <div class="h-full flex flex-col items-center justify-end gap-1 shrink">
+              <%= f.label :hide_age, "Hide", class: "label-text font-accent" %>
+              <%= f.check_box :hide_age, class: "toggle toggle-error" %>
+            </div>
+          </div>
+
+          <!-- Height -->
+          <div class="flex items-center gap-4">
+            <%= f.input(
+              :height,
+              type: :number, label: false, placeholder: 'Height', unit: 'cm',
+              wrapper: :icon_input,
+              wrapper_html: {class: 'grow'},
+              lucide_icon: 'ruler',
+              lucide_icon_class: 'text-gray-500',
+              input_html: {min: 50, max: 260},
+              label_html: {class: 'font-accent'},
+            ) %>
+
+            <div class="h-full flex flex-col items-center justify-end gap-1 shrink">
+              <%= f.label :hide_height, "Hide", class: "label-text font-accent" %>
+              <%= f.check_box :hide_height, class: "toggle toggle-error" %>
+            </div>
+          </div>
+
+          <!-- Height -->
+          <div class="flex items-center gap-4">
+            <%= f.input(
+              :weight,
+              type: :number, label: false, placeholder: 'Weight', unit: 'kg',
+              wrapper: :icon_input,
+              wrapper_html: {class: 'grow'},
+              lucide_icon: 'weight',
+              lucide_icon_class: 'text-gray-500',
+              input_html: {min: 50, max: 260},
+              label_html: {class: 'font-accent'},
+            ) %>
+
+            <div class="h-full flex flex-col items-center justify-end gap-1 shrink">
+              <%= f.label :hide_height, "Hide", class: "label-text font-accent" %>
+              <%= f.check_box :hide_height, class: "toggle toggle-error" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-4 mt-8">
+          <!-- Selectable/Enum attributes (body, position, gender) -->
+          <% select_attrs = {
+            body: 'person-standing',
+            position: 'arrow-up-down',
+            gender: 'transgender',
+            relationship: 'gem',
+          } %>
+
+          <% select_attrs.each do |attribute, icon| %>
+            <div class="flex items-center gap-4">
+              <div class="ml-3 text-gray-500">
+                <%= lucide_icon icon %>
+              </div>
+
+              <label class="form-control w-full">
+                <%= f.select(
+                  attribute,
+                  enum_for_select(f.object, attribute),
+                  {}, {class: 'select select-bordered'}
+                ) %>
+              </label>
+            </div>
+          <% end %>
+
+      <!-- Save Button -->
+      <div class="sticky bottom-0 bg-base-100 pt-4 pb-6">
+        <%= f.submit "Save Changes", class: "btn btn-primary w-full" %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -20,7 +20,9 @@
         </h1>
 
         <div class="text-neutral-content">
-          <%= format_distance(@distance) %>
+          <% unless @profile.hide_distance? %>
+            <%= format_distance(@distance) %>
+          <% end %>
         </div>
       </div>
 
@@ -37,9 +39,16 @@
 
       <!-- Chat CTA -->
       <div class="mt-6 w-full flex items-center gap-2">
+        <% if @profile == current_profile %>
+          <a href="<%= edit_profile_path(current_profile) %>"
+            class="btn btn-block">
+            Edit your profile
+          </a>
+        <% else %>
         <a href="<%= profile_chats_path(@profile) %>"
           data-turbo-method="post"
-          class="grow text-slate-300 rounded-full p-3 px-4 bg-gray-800 text-neutral-content">
+          class="grow text-slate-300 rounded-full p-3 px-4 bg-gray-800
+                 text-neutral-content truncate">
           Say something nice...
         </a>
         <a href="#" class="text-slate-300 rounded-full p-2 bg-gray-800">
@@ -50,6 +59,7 @@
           class="text-slate-300 rounded-full p-2 bg-slate-800">
           <%= lucide_icon 'message-circle', class: 'w-9 h-9'  %>
         </a>
+        <% end %>
       </div>
     </div>
 
@@ -80,15 +90,15 @@
 
   <!-- Attributes section -->
   <div class="text-gray-200">
-    <table class="table">
+    <table class="table table-sm md:table-md>
       <thead></thead>
       <tbody>
         <% %i[weight height].each do |name| %>
           <% if @profile.send(name).present? && !@profile.send("hide_#{name}") %>
             <tr class="text-lg">
-              <th class="tracking-wider">
+              <td class="font-accent font-light">
                 <%= Profile.human_attribute_name(name) %>
-              </th>
+              </td>
               <td>
                 <%= send "format_attr_#{name}", @profile.send(name) %>
               </td>
@@ -96,12 +106,12 @@
           <% end %>
         <% end %>
 
-        <% %i[position body gender].each do |name| %>
-          <% unless @profile.send("#{name}_unknown?") || @profile.send("hide_#{name}") %>
+        <% %i[position body gender relationship].each do |name| %>
+          <% unless @profile.send("#{name}_unknown?") %>
             <tr class="text-lg">
-              <th class="tracking-wider">
+              <td class="font-accent font-light">
                 <%= Profile.human_attribute_name(name) %>
-              </th>
+              </td>
               <td>
                 <%= send "format_attr_#{name}", @profile.send(name) %>
               </td>

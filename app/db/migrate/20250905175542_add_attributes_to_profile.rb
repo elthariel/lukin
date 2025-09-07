@@ -5,5 +5,6 @@ class AddAttributesToProfile < ActiveRecord::Migration[8.0]
     add_column :profiles, :position, :integer, default: 0, null: false
     add_column :profiles, :body, :integer, default: 0, null: false
     add_column :profiles, :gender, :integer, default: 0, null: false
+    add_column :profiles, :relationship, :integer, default: 0, null: false
   end
 end
